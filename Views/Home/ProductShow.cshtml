@@ -1,0 +1,76 @@
+﻿@model Product
+
+<div class="single-product-page" dir="rtl">
+    <div class="container">
+        <div class="product-wrapper">
+
+            <!-- Product Images Slider -->
+            <div class="product-image-slider-wrapper">
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="product-image-slider">
+                    @if (Model.ProductImages != null && Model.ProductImages.Any())
+                    {
+                        foreach (var item in Model.ProductImages)
+                        {
+        <div class="slider-item">
+            <img src="~/@item.Image" alt="@Model.Name">
+        </div> }
+}
+else
+{
+<div class="slider-item">
+    <img src="~/@Model.Image" alt="@Model.Name">
+</div>}
+                </div>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details" style="text-align:left">
+                <h1>@Model.Name</h1>
+                <h3><strong>قسم المنتج:</strong> @Model.Cat.Name</h3>
+
+                <h2 class="product-quantity"><strong>كمية المنتج:</strong> @Model.Quantity</h2>
+                <h4><strong>تاريخ المنتج:</strong> @Model.DateSystem</h4>
+
+                <h2 class="product-price"><strong>سعر المنتج:</strong> ج.م @Model.Price</h2>
+
+
+                <h4 class="product-description">@Model.Description</h4>
+
+
+                <!-- Add to Cart -->
+                <form asp-action="AddtoCart" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <label>الكمية:</label>
+                    <input type="number" name="quantity" min="1" value="1" />
+                    <button type="submit"><i class="fas fa-shopping-cart"></i> أضف إلى السلة</button>
+                </form>
+
+                <!-- Share -->
+                <div class="product-share">
+                    <h4>Share:</h4>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>const slider = document.querySelector('.product-image-slider');
+    const nextBtn = document.querySelector('.next-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+
+    nextBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: 400, behavior: 'smooth' });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: -400, behavior: 'smooth' });
+    });</script>

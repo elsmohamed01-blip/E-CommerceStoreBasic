@@ -1,0 +1,157 @@
+﻿
+@page
+@model LoginModel
+@{ ViewData["Title"] = "تسجيل الدخول"; }
+
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">تسجيل الدخول إلى حسابك</h2>
+        <p class="login-subtitle">مرحبًا بعودتك! الرجاء إدخال بياناتك لتسجيل الدخول</p>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Input.Email" class="form-label">البريد الإلكتروني</label>
+                <input asp-for="Input.Email" class="form-control custom-input" placeholder="example@email.com" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Input.Password" class="form-label">كلمة المرور</label>
+                <input asp-for="Input.Password" class="form-control custom-input" placeholder="" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check text-start mb-3">
+                <input asp-for="Input.RememberMe" class="form-check-input" />
+                <label asp-for="Input.RememberMe" class="form-check-label">تذكرني</label>
+            </div>
+
+            <button type="submit" class="btn login-btn w-100">تسجيل الدخول</button>
+
+            <div class="login-links mt-3 text-center">
+                <p><a id="forgot-password" asp-page="./ForgotPassword">هل نسيت كلمة المرور؟</a></p>
+                <p>ليس لديك حساب؟ <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">إنشاء حساب جديد</a></p>
+            </div>
+        </form>
+
+        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+        {
+            <hr />
+            <div class="text-center mt-3">
+                <p>أو سجل باستخدام:</p>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <button type="submit" class="btn btn-outline-secondary m-1" name="provider" value="@provider.Name">
+                            <i class="fab fa-@provider.DisplayName.ToLower()"></i> @provider.DisplayName
+                        </button>}
+                </form>
+            </div>}
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<!-- ====== CSS المخصص لتصميم الصفحة ====== -->
+<style>
+    body {
+        background: linear-gradient(to right, #ffb380, #ffe0cc);
+        font-family: "Cairo", sans-serif;
+        direction: rtl;
+        text-align: right;
+    }
+
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .login-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px 35px;
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+    }
+
+    .login-title {
+        color: #ff6600;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+        color: #777;
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .custom-input {
+        border-radius: 10px;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .custom-input:focus {
+            border-color: #ff6600;
+            box-shadow: 0 0 5px rgba(255, 102, 0, 0.3);
+        }
+
+    .login-btn {
+        background-color: #ff8c42;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+        border: none;
+    }
+
+        .login-btn:hover {
+            background-color: #ff6600;
+        }
+
+    .login-links a {
+        color: #ff6600;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+        .login-links a:hover {
+            color: #ff3300;
+            text-decoration: underline;
+        }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
